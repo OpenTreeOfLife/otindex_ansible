@@ -1,0 +1,5 @@
+venv/*
+.DS_Store
+*.retry
+group_vars/production.yml
+group_vars/development.yml

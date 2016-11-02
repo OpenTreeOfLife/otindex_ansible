@@ -1,22 +1,27 @@
 ---
 - hosts: all
 
-  tasks:
+# start by installing required packages (note that postgresql packages
+# installed separately in postgresql role)
+  pre_tasks:
+    - name: Install packages
+      become: true
+      apt: name={{ item }} state=present
+      with_items:
+        - virtualenv
+        - libpq-dev
+        - apache2
+        - libapache2-mod-wsgi
+        - git-core
+        - python-psycopg2
+        - build-essential
+        - python-dev
 
-  - name: Install packages
-    become: true
-    apt: name={{ item }} state=present
-    with_items:
-      - virtualenv
-      - libpq-dev
-      - apache2
-      - libapache2-mod-wsgi
-      - git-core
-      - python-psycopg2
-      - postgresql
-      - postgresql-contrib
-      - build-essential
-      - python-dev
+  roles:
+    - otdata
+    - postgresql
+
+  tasks:
 
   # otindex setup
   - name: Clone otindex repo
@@ -24,30 +29,3 @@
 
   - name: Install otindex python requirements
     pip: requirements=/home/rapiduser/otindex/requirements.txt virtualenv=/home/rapiduser/otindex/venv
-
-  # OTT and phylesystem data
-  - name: Create shards directory
-    file: path=/home/rapiduser/phylesystem/shards state=directory
-
-  - name: Clone phylesystem repo
-    git: repo=https://github.com/OpenTreeOfLife/phylesystem-1.git dest=/home/rapiduser/phylesystem/shards
-
-  - name: Create ott directory
-    file: path=/home/rapiduser/ott state=directory
-
-  - name: Download and extract ott
-    unarchive: src=http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz dest=/home/rapiduser/ott remote_src=yes
-
-  # postgres setup
-  - name: Ensure the PostgreSQL service is running
-    service: name=postgresql state=started enabled=yes
-
-  - name: Create postgres database
-    become: true
-    become_user: postgres
-    postgresql_db: name=otindex
-
-  - name: Create postgres user
-    become: true
-    become_user: postgres
-    postgresql_user: db=otindex name=otindex password="{{db_password}}"

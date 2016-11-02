@@ -32,8 +32,8 @@ database is already running, then edit to use the existing password.
 
 For production:
 
-    $ ansible-playbook otindex.yml -i hosts production
+    $ ansible-playbook otindex.yml -i hosts --limit production
 
 For development:
 
-    $ ansible-playbook otindex.yml -i hosts development
+    $ ansible-playbook otindex.yml -i hosts --limit development

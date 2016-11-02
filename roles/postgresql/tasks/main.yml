@@ -1,0 +1,25 @@
+---
+# postgresql role
+# Tasks for postgresql installation and setup
+
+  - name: Install postgresql packages
+    become: true
+    apt: name={{ item }} state=present
+    with_items:
+      - libpq-dev
+      - python-psycopg2
+      - postgresql
+      - postgresql-contrib
+
+  - name: Ensure the PostgreSQL service is running
+    service: name=postgresql state=started enabled=yes
+
+  - name: Create postgres database
+    become: true
+    become_user: postgres
+    postgresql_db: name=otindex
+
+  - name: Create postgres user
+    become: true
+    become_user: postgres
+    postgresql_user: db=otindex name=otindex password="{{db_password}}"

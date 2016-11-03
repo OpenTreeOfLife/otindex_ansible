@@ -1,0 +1,14 @@
+---
+# default variables for peyotl tasks and template file
+
+# task vars
+install_dir: /opt/otindex
+peyotl_config_location: "{{ install_dir}}/.peyotl"
+
+# template vars
+phylesystem_parent: "{{ install_dir }}/phylesystem/shards"
+repo_nexml2json: 1.2.1
+ott_dir: "{{ install_dir }}/ott"
+logging_level: debug
+logging_filepath: /tmp/peyotl-log/
+logging_formatter: rich

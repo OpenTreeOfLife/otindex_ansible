@@ -1,2 +1,4 @@
 ---
 db_password: put_pwd_here
+phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-0.git
+ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz

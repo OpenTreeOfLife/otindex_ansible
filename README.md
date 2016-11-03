@@ -24,9 +24,13 @@ for the production and development servers are set to the correct values.
     $ cp example-production.yml production.yml
     $ cp example-development.yml development.yml
 
-Edit the database connection password in each file. If this is an initial
+Edit the following config information:
+
+* database connection password: If this is an initial
 setup, the postgres password will be set to what is in this file. If the
-database is already running, then edit to use the existing password.
+database is already running, then edit to use the existing password
+* location of Open Tree Taxonomy
+* location of phylesystem repo
 
 # Running the playbook
 

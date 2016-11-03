@@ -1,16 +1,16 @@
 ---
 
-# otdata role
+# tasks for otdata role
 # sets up phylesystem and ott directories
 
 - name: Create shards directory
   file: path=/home/rapiduser/phylesystem/shards state=directory
 
 - name: Clone phylesystem repo
-  git: repo=https://github.com/OpenTreeOfLife/phylesystem-1.git dest=/home/rapiduser/phylesystem/shards
+  git: repo="{{phylesystem_repo}}" dest=/home/rapiduser/phylesystem/shards
 
 - name: Create ott directory
   file: path=/home/rapiduser/ott state=directory
 
 - name: Download and extract ott
-  unarchive: src=http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz dest=/home/rapiduser/ott remote_src=yes
+  unarchive: src="{{ott_url}}" dest=/home/rapiduser/ott remote_src=yes

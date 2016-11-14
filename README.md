@@ -23,17 +23,17 @@ production and development servers are set to the correct values.
 Here, you define variables that are specific for production and development.
 Settings in `group_vars` take precedence over default variables in `roles`.
 
+The `all.yml` file contains settings that are generally common across production
+and development. You should only have to edit the database password. If this is
+an initial setup, the postgres password will be set to what is in this file. If
+the database is already running, then edit it to use the existing password.  
+
+Then cp the server-specific files and edit the appropriate config information
+(see file comments for details):
+
     $ cd group_vars
     $ cp example-production.yml production.yml
     $ cp example-development.yml development.yml
-
-Edit the following config information:
-
-* database connection password: If this is an initial
-setup, the postgres password will be set to what is in this file. If the
-database is already running, then edit to use the existing password
-* location of Open Tree Taxonomy
-* location of phylesystem repo
 
 **Roles**
 

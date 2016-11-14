@@ -1,5 +1,14 @@
 ---
+# copy this to development.yml and then edit for your setup
+
+# the location of the phylesystem repo
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-0.git
+
+# the location of the ott tarball
 ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
+
+# the name of the configuration file for pyramid
 config_filename: development.ini
+
+# debug level
 logger_otindex_level: DEBUG

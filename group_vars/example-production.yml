@@ -1,9 +1,5 @@
 ---
-db_password:
-db_username: postgres
-db_name: otindex
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-1.git
 ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
 config_filename: production.ini
-filelog_path: logs/otindex.log
-logger_otindex_level: DEBUG
+logger_otindex_level: INFO

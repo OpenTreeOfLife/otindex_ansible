@@ -5,3 +5,12 @@
 
 # everthing will be installed under this directory
 install_dir: /home/rapiduser/otindex
+
+# database connection details
+db_password:
+db_username: postgres
+db_name: otindex
+
+# various paths
+peyotl_config_location: "{{ install_dir}}/.peyotl"
+filelog_path: logs/otindex.log

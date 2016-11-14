@@ -1,0 +1,7 @@
+---
+###
+# put vars here that apply to both production and development
+###
+
+# everthing will be installed under this directory
+install_dir: /home/rapiduser/otindex

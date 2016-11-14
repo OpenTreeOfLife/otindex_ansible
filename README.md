@@ -2,23 +2,26 @@ Ansible playbook for deployment of
 [otindex](https://github.com/OpenTreeOfLife/otindex), the Open Tree of Life
 data store indexer.
 
-In progress. Not ready for production.
+In progress. Not ready for production. Tested only on Ubuntu16.
 
 # Installation
 
-Requires ansible 2.2 or later on the client. Ansible recommends installing with
-pip on OS X:
+Install ansible on the client machine. Requires ansible 2.2 or later. Ansible recommends installing with pip on OS X:
 
     $ sudo pip install ansible
 
-Note that (as of November 2016), the brew version of ansible is out of date.
+For OS X users, note that (as of November 2016), the brew version of ansible is only 2.1.
 
 # Configuration
 
-**Hosts**: check the `hosts` file and ensure that the hostname and usernames
-for the production and development servers are set to the correct values.
+**Hosts**: The `hosts` file contains information about the server where
+you are installing otindex. Edit the hostname and usernames for the
+production and development servers are set to the correct values.
 
 **Group_vars**:
+
+Here, you define variables that are specific for production and development.
+Settings in `group_vars` take precedence over default variables in `roles`.
 
     $ cd group_vars
     $ cp example-production.yml production.yml
@@ -32,7 +35,27 @@ database is already running, then edit to use the existing password
 * location of Open Tree Taxonomy
 * location of phylesystem repo
 
+**Roles**
+
+The playbook calls separate [roles](http://docs.ansible.com/ansible/playbooks_roles.html#roles)
+for 1) setup of OpenTree data (OTT and phylesystem); 2) postgresql
+installation / setup; 3) peyotl installation; and finally 4) otindex
+installation / setup. See the `roles/*/defaults/main.yml` and
+`roles/*/vars/main.yml` for variables specific to each role, noting that
+settings in `vars` take precedence over `defaults`.
+
+Note that there you can't simply run the entire playbook in a virtualenv, so
+tasks that require the virtualenv have the following directive:
+
+```
+environment:
+  VENV: "{{ install_dir }}/venv"
+```
+
 # Running the playbook
+
+You can limit the playbook to run only for specific servers (production vs
+development).
 
 For production:
 

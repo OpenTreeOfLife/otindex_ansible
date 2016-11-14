@@ -4,13 +4,10 @@
 # sets up phylesystem and ott directories
 
 - name: Create shards directory
-  file: path=/home/rapiduser/phylesystem/shards state=directory
+  file: path={{install_dir}}/phylesystem/shards state=directory
 
 - name: Clone phylesystem repo
-  git: repo="{{phylesystem_repo}}" dest=/home/rapiduser/phylesystem/shards
-
-- name: Create ott directory
-  file: path=/home/rapiduser/ott state=directory
+  git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
 
 - name: Download and extract ott
-  unarchive: src="{{ott_url}}" dest=/home/rapiduser/ott remote_src=yes
+  unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes

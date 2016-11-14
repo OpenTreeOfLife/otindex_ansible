@@ -20,12 +20,9 @@
   roles:
     - otdata
     - postgresql
+    - peyotl
+    - otindex
 
-  tasks:
-
-  # otindex setup
-  - name: Clone otindex repo
-    git: repo=https://github.com/OpenTreeOfLife/otindex.git dest=/home/rapiduser/otindex
-
-  - name: Install otindex python requirements
-    pip: requirements=/home/rapiduser/otindex/requirements.txt virtualenv=/home/rapiduser/otindex/venv
+ # set this at play level because used multiple roles: peyotl and otindex
+  environment:
+      PEYOTL_CONFIG_FILE: "{{ peyotl_config_location }}/config"

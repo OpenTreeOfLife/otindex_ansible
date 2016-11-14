@@ -17,9 +17,9 @@
   - name: Create postgres database
     become: true
     become_user: postgres
-    postgresql_db: name=otindex
+    postgresql_db: name={{ db_name }}
 
-  - name: Create postgres user
+  - name: Create new postgresql user
     become: true
     become_user: postgres
-    postgresql_user: db=otindex name=otindex password="{{db_password}}"
+    postgresql_user: db={{ db_name }} name={{ db_username }} password={{ db_password }}

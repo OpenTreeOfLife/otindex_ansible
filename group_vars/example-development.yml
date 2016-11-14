@@ -1,4 +1,10 @@
 ---
-db_password: put_pwd_here
+db_password:
+db_username: postgres
+db_name: otindex
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-0.git
 ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
+filelog_path: logs/otindex.log
+logger_otindex_level: DEBUG
+config_filename: development.ini
+peyotl_config_location: "{{ install_dir}}/.peyotl"

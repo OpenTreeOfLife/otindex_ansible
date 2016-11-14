@@ -1,0 +1,49 @@
+---
+# Installs otindex and loads phylesystem and ott into database
+
+- name: Clone otindex repo
+  git: repo=https://github.com/OpenTreeOfLife/otindex.git
+        dest={{ install_dir }}/otindex
+        version={{ otindex_branch }}
+
+- name: Install otindex python requirements
+  pip: requirements={{ install_dir }}/otindex/requirements.txt
+        virtualenv={{ install_dir }}/venv
+
+- name: Install otindex
+  command: $VENV/bin/python setup.py install
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
+
+# create pyramid config file
+- name: Create config file from template
+  template: src=templates/config.j2 dest={{ install_dir }}/otindex/{{ config_filename }}
+
+- name: Create log file dir
+  file: path={{ install_dir }}/otindex/{{ logfile_dir }} state=directory
+
+# - name: Create log file
+#   file: path={{ install_dir }}/otindex/{{ logfile_dir }}/{{ logfile_name }} state=touch
+
+# creates database tables
+- name: Initialze otindex database
+  shell: $VENV/bin/initialize_otindex_db {{ config_filename }}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
+
+# clones phylesystem repo if does not exist, otherwise pulls
+- name: Refresh phylesystem
+  git: repo={{ phylesystem_repo }} dest={{ install_dir }}/phylesystem/shards
+
+# load phylesystem data in to database; 'creates' directive ensures
+# idempotency
+- name: Load phylesystem data
+  command: creates={{ install_dir }}/.phylesystem $VENV/bin/python
+      {{ install_dir}}/otindex/otindex/scripts/load_nexson.py
+      {{ install_dir}}/otindex/{{ config_filename }}
+  environment:
+    VENV: "{{ install_dir }}/venv"

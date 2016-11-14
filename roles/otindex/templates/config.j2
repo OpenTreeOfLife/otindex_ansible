@@ -1,0 +1,100 @@
+###
+# Template for development.ini file
+###
+
+###
+# Database details; this section used for data loading scripts
+###
+
+[connection_info]
+dbname = {{ db_name }}
+dbuser = {{ db_username }}
+password = {{ db_password }}
+
+[database_tables]
+curatorstudytable = curator_study_map
+treeotutable = tree_otu_map
+curatortable = curator
+treetable = tree
+studytable = study
+otttable = taxonomy
+synonymtable = synonym
+propertytable = property
+
+###
+# app configuration
+# http://docs.pylonsproject.org/projects/pyramid/en/1.5-branch/narr/environment.html
+###
+
+[app:main]
+use = egg:otindex
+
+pyramid.reload_templates = true
+pyramid.debug_authorization = false
+pyramid.debug_notfound = false
+pyramid.debug_routematch = false
+pyramid.default_locale_name = en
+pyramid.includes =
+    pyramid_debugtoolbar
+    pyramid_tm
+
+###
+# Database connection URL used by pyramid
+###
+sqlalchemy.url = postgresql://{{ db_username }}:{{ db_password }}@localhost/{{ db_name }}
+
+# By default, the toolbar only appears for clients from IP addresses
+# '127.0.0.1' and '::1'.
+# debugtoolbar.hosts = 127.0.0.1 ::1
+
+###
+# wsgi server configuration
+###
+
+[server:main]
+use = egg:waitress#main
+host = 0.0.0.0
+port = 6543
+
+###
+# logging configuration
+# http://docs.pylonsproject.org/projects/pyramid/en/1.5-branch/narr/logging.html
+###
+
+[loggers]
+keys = root, otindex, sqlalchemy
+
+[handlers]
+keys = console, filelog
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console
+
+[logger_otindex]
+level = {{ logger_otindex_level }}
+handlers = filelog
+qualname = otindex
+
+[logger_sqlalchemy]
+level = INFO
+handlers =
+qualname = sqlalchemy.engine
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[handler_filelog]
+class = FileHandler
+args = ('{{ logfile_dir }}/{{ logfile_name }}','a')
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s

@@ -20,7 +20,6 @@
 - name: Install peyotl
   command: $VENV/bin/python setup.py install
   environment:
-    #PEYOTL_CONFIG_FILE: "{{ peyotl_config_location }}/config"
     VENV: "{{install_dir}}/venv"
   args:
     chdir: "{{install_dir}}/peyotl"

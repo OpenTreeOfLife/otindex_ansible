@@ -18,10 +18,10 @@
         - python-dev
 
   roles:
-    - otdata
     - postgresql
     - peyotl
     - otindex
+    - otdata
 
  # set this at play level because used multiple roles: peyotl and otindex
   environment:

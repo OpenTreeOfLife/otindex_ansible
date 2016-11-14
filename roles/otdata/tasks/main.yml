@@ -2,6 +2,7 @@
 
 # tasks for otdata role
 # sets up phylesystem and ott directories
+# load data into the database
 
 - name: Create shards directory
   file: path={{install_dir}}/phylesystem/shards state=directory
@@ -11,3 +12,32 @@
 
 - name: Download and extract ott
   unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
+
+# load phylesystem data in to database
+# 'creates' directive ensures idempotency
+- name: Load phylesystem data
+  command: $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
+
+# load taxonomy; assumes taxonomy already downloaded / extracted
+# TODO: define dependency as per
+# http://docs.ansible.com/ansible/playbooks_roles.html#role-dependencies
+- name: Load taxonomy data
+  command: creates={{ install_dir}}/otindex/ott.csv
+    $VENV/bin/python otindex/scripts/load_taxonomy.py {{config_filename}}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
+
+# create otu-tree mapping table
+- name: Create otu-tree mapping table
+  command: creates={{ install_dir}}/otindex/tree_otu_assoc.csv
+    $VENV/bin/python otindex/scripts/create_otu_table.py {{config_filename}}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"

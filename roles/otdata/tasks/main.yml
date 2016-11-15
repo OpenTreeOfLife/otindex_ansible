@@ -16,7 +16,7 @@
 # load phylesystem data in to database
 # 'creates' directive ensures idempotency
 - name: Load phylesystem data
-  command: $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
+  command: creates={{ install_dir}}/otindex/.phylesystem $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
   environment:
     VENV: "{{ install_dir }}/venv"
   args:

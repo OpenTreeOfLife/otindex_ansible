@@ -1,6 +1,14 @@
 ---
 # copy this to production.yml and then edit for your setup
 
+# server username
+username: rapiduser
+
+# database connection details
+db_password:
+db_username: postgres
+db_name: otindex
+
 # the location of the phylesystem repo
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-1.git
 

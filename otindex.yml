@@ -10,8 +10,6 @@
       with_items:
         - virtualenv
         - libpq-dev
-        - apache2
-        - libapache2-mod-wsgi
         - git-core
         - python-psycopg2
         - build-essential
@@ -22,7 +20,13 @@
     - peyotl
     - otindex
     - otdata
+    - apache
 
- # set this at play level because used multiple roles: peyotl and otindex
+  # set this at play level because used multiple roles: peyotl and otindex
   environment:
       PEYOTL_CONFIG_FILE: "{{ peyotl_config_location }}/config"
+
+  handlers:
+      - name: restart apache
+        become: true
+        service: name=apache2 state=restarted

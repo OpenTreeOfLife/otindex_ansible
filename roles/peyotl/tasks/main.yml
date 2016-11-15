@@ -3,9 +3,10 @@
 # Install and configure peyotl library
 
 - name: Clone peyotl repo
-  git: repo=https://github.com/OpenTreeOfLife/peyotl.git
-        dest={{ install_dir }}/peyotl
-        version={{ peyotl_branch}}
+  git:
+    repo: https://github.com/OpenTreeOfLife/peyotl.git
+    dest: "{{ install_dir }}/peyotl"
+    version: "{{ peyotl_branch}}"
 
 - name: Create dir for peyotl config file
   file: path={{peyotl_config_location}} state=directory
@@ -14,8 +15,9 @@
   template: src=templates/config.j2 dest={{ peyotl_config_location }}/config
 
 - name: Install peyotl python requirements
-  pip: requirements={{install_dir}}/peyotl/requirements.txt
-          virtualenv={{install_dir}}/venv
+  pip:
+    requirements: "{{install_dir}}/peyotl/requirements.txt"
+    virtualenv: "{{install_dir}}/venv"
 
 - name: Install peyotl
   command: $VENV/bin/python setup.py install

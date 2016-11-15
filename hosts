@@ -1,6 +1,5 @@
 [development]
-dev_otindex ansible_host=rapid-232.vm.duke.edu ansible_user=rapiduser
+dev_otindex ansible_host=rapid-232.vm.duke.edu ansible_user="{{ username }}"
 
 [production]
-otindex ansible_host=rapid-241.vm.duke.edu ansible_user=rapiduser
-
+otindex ansible_host=rapid-241.vm.duke.edu ansible_user="{{ username }}"

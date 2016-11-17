@@ -18,6 +18,8 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  notify:
+    - restart apache
 
 # create pyramid config file
 - name: Create config file from template
@@ -26,10 +28,10 @@
     dest: "{{ install_dir }}/otindex/{{ config_filename }}"
 
 - name: Create log file dir
-  file: path={{ install_dir }}/otindex/{{ otindex_logfile_dir }} state=directory
+  file: path={{ otindex_logfile_dir }} state=directory
 
 # initialize database, creating database tables
-- name: Initialze otindex database
+- name: Initialize otindex database
   shell: $VENV/bin/initialize_otindex_db {{ config_filename }}
   environment:
     VENV: "{{ install_dir }}/venv"

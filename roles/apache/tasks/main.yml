@@ -1,0 +1,36 @@
+---
+# apache tasks
+
+- name: isntall apache modules
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+
+# equivalent of 'sudo a2enmod wsgi'
+- name: enble wsgi
+  apache2_module: state=present name=wsgi
+
+- name: write pyramid.wsgi config file
+  template:
+    src: templates/pyramid_wsgi.j2
+    dest: "{{ install_dir }}/venv/pyramid.wsgi"
+
+- name: write apache config file
+  become: true
+  template:
+    src: templates/apache_conf.j2
+    dest: /etc/apache2/conf-available/otindex.conf
+
+- name: enable apache conf file
+  become: true
+  command: a2enconf otindex
+  notify:
+    - restart apache
+
+- name: ensure apache is running
+  become: true
+  service:
+    name: apache2
+    state: started

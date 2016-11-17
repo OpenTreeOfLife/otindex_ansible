@@ -1,8 +1,7 @@
 ---
-- hosts: all
-
 # start by installing required packages (note that postgresql packages
-# installed separately in postgresql role)
+# installed separately in postgresql role and apache packages installed
+# in apache role)
   pre_tasks:
     - name: Install packages
       become: true
@@ -30,3 +29,6 @@
       - name: restart apache
         become: true
         service: name=apache2 state=restarted
+
+      - name: restart postgresql
+        service: name=postgresql state=restarted

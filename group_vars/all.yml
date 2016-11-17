@@ -4,8 +4,8 @@
 ###
 
 # everthing will be installed under this directory
-install_dir: /home/rapiduser/otindex
+install_dir: /home/{{ username }}/otindex
 
-# various paths
+# other paths
 peyotl_config_location: "{{ install_dir}}/.peyotl"
-otindex_logfile_dir: logs
+otindex_logfile_dir: "{{ install_dir}}/otindex/logs"

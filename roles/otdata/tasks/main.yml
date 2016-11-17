@@ -1,8 +1,6 @@
 ---
 
-# tasks for otdata role
-# sets up phylesystem and ott directories
-# load data into the database
+# tasks for downloading data and loading into database
 
 - name: Create shards directory
   file: path={{install_dir}}/phylesystem/shards state=directory

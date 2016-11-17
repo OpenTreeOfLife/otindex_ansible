@@ -1,0 +1,9 @@
+###
+# Template for pyramid.wsgi file; goes into virtualenv directory; see
+# http://docs.pylonsproject.org/projects/pyramid/en/latest/tutorials/modwsgi/
+###
+
+from pyramid.paster import get_app, setup_logging
+ini_path = '{{ install_dir }}/otindex/{{ config_filename }}'
+setup_logging(ini_path)
+application = get_app(ini_path, 'main')

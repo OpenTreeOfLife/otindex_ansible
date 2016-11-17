@@ -12,17 +12,29 @@
       - postgresql-contrib
 
   - name: Ensure the PostgreSQL service is running
-    service: name=postgresql state=started enabled=yes
+    become: true
+    service: name=postgresql state=restarted enabled=yes
 
   - name: Create postgres database
     become: true
     become_user: postgres
-    postgresql_db: name={{ db_name }}
+    postgresql_db: name={{ db_name }} state=present
 
-  - name: Create new postgresql user
+  - name: Create new postgresql user and give access to database
     become: true
     become_user: postgres
-    postgresql_user: db={{ db_name }} name={{ db_username }} password={{ db_password }}
+    postgresql_user: db={{ db_name }} name={{ db_username }} password={{ db_password }} priv=ALL state=present
+
+  - name: grant new user access to all tables
+    become: true
+    become_user: postgres
+    postgresql_privs:
+      db: "{{ db_name }}"
+      roles: "{{ db_username }}"
+      privs: ALL
+      type: table
+      objs: ALL_IN_SCHEMA
 
   - name: ensure that postgresql is started
+    become: true
     service: name=postgresql state=started

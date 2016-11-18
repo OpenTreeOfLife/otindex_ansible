@@ -2,7 +2,7 @@
 # copy this to production.yml and then edit for your setup
 
 # server username
-username: rapiduser
+username: 
 
 # database connection details
 db_password:
@@ -12,7 +12,15 @@ db_name: otindex
 # the location of the phylesystem repo
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-1.git
 
-# the location of the ott tarball
+# Set this to copy generated taxonomy files from local machine rather than
+# generate on server (if <8GB memory on server)
+# Note that EVERYTHING in this dir gets copied to server, so this dir should
+# ONLY contain the taxonomy files (else, needlessly slower)
+# Make sure '/' on end so that copies contents, not directory
+taxonomy_files: /Users/karen/Documents/opentreeoflife/software/otindex/taxonomy_files/
+
+# the location of the ott tarball; if taxonomy_files is set, then you don't
+# need this
 ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
 
 # the name of the configuration file for pyramid

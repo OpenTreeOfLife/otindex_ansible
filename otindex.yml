@@ -1,8 +1,16 @@
 ---
+- hosts: all
+  gather_facts: False
+
 # start by installing required packages (note that postgresql packages
 # installed separately in postgresql role and apache packages installed
 # in apache role)
+
   pre_tasks:
+    # python2 might not be installed on server (e.g. Ubuntu16)
+    - name: install python 2
+      become: true
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
     - name: Install packages
       become: true
       apt: name={{ item }} state=present
@@ -10,8 +18,8 @@
         - virtualenv
         - libpq-dev
         - git-core
-        - python-psycopg2
         - build-essential
+        - python-psycopg2
         - python-dev
 
   roles:

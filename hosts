@@ -1,5 +1,5 @@
 [development]
-dev_otindex ansible_host=rapid-232.vm.duke.edu ansible_user="{{ username }}"
+dev_otindex ansible_host=devotindex.opentreeoflife.org ansible_user="{{ username }}"
 
 [production]
-otindex ansible_host=rapid-241.vm.duke.edu ansible_user="{{ username }}"
+otindex ansible_host=otindex.opentreeoflife.org ansible_ssh_private_key_file="{{ pem_file }}" ansible_user="{{ username }}"

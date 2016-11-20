@@ -7,9 +7,6 @@
 - name: Clone phylesystem repo
   git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
 
-# - name: Download and extract ott
-#   unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
-
 # load phylesystem data in to database
 # 'creates' directive ensures idempotency
 - name: Load phylesystem data
@@ -19,9 +16,14 @@
   args:
     chdir: "{{ install_dir }}/otindex"
 
-# if local location of taxonomy files defined, copy from local
+- name: Download and extract ott
+  unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
+  when: ott_url is defined
+
 - name: copy taxonomy files from local machine
-  command: copy src={{ taxonomy_files }} dest={{ install_dir }}/otindex/
+  copy: src={{ item }} dest={{ install_dir }}/otindex
+  with_fileglob:
+      - "{{ taxonomy_files }}/*.csv"
   when: taxonomy_files is defined
 
 # create the taxonomy files, if ott.csv does not exist (i.e., if not downloaded
@@ -34,8 +36,9 @@
   args:
     chdir: "{{ install_dir }}/otindex"
 
+# make this dependent on results of "copy taxonomy files from local machine"
 - name: Load taxonomy files into database
-  command: $VENV/bin/python otindex/scripts/load_taxonomy_files.py {{config_filename}}
+  command: $VENV/bin/python otindex/scripts/load_taxonomy_files.py {{ config_filename }} {{ install_dir }}/otindex
   environment:
     VENV: "{{ install_dir }}/venv"
   args:

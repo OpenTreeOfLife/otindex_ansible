@@ -1,7 +1,7 @@
 ---
 # apache tasks
 
-- name: isntall apache modules
+- name: install apache modules
   become: true
   apt: name={{ item }} state=present
   with_items:

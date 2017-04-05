@@ -10,19 +10,19 @@ db_password:
 db_username: postgres
 db_name: otindex
 
-# the location of the phylesystem repo
+# if this is true, then must set database_dump_filename
+# if false, then must set phylesystem_repo and ott_url
+database_dump: false
+
+# set these if database_dump is false
+# loads database on server; requires >4GB memory
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-0.git
+ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
 
-# Set ott_url to download OTT from opentree website and use to import database
-# Note that this takes >4GB memory, so if server has less, use taxonomy_files
-#  var instead
-#ott_url: http://files.opentreeoflife.org/ott/ott2.10/ott2.10draft11.tgz
-
-# Set this to copy generated taxonomy files from local machine rather than
-#  generate on server (if <8GB memory on server)
-# Note that all .csv files in this dir gets copied to server
-# Make sure '/' on end so that copies contents, not directory
-taxonomy_files: <path to local files>
+# set if database_dump is true
+# uploads local database dump; use if server has limited memory
+# create compressed dump using: $ pg_dump -a db_name | gzip > filename.gz
+database_dump_filename: /Users/karen/Documents/opentreeoflife/software/otindex/otindex/scripts/otindex.dmp.gz
 
 # the name of the configuration file for pyramid
 config_filename: development.ini

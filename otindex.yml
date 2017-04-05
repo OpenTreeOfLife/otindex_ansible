@@ -29,7 +29,7 @@
     - otdata
     - apache
 
-  # set this at play level because used multiple roles: peyotl and otindex
+  # set this at play level because used in multiple roles: peyotl and otindex
   environment:
       PEYOTL_CONFIG_FILE: "{{ peyotl_config_location }}/config"
 

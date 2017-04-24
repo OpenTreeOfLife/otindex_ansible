@@ -1,45 +1,12 @@
 ---
-# tasks for downloading data and loading into database
+# tasks for getting data into the database
+# either loads data on server, or copies local database dump file,
+# depending on setting of database_dump in group_vars
 
-- name: Create shards directory
-  file: path={{install_dir}}/phylesystem/shards state=directory
+- include: "load_dump.yml"
+  static: no
+  when: database_dump
 
-- name: Clone phylesystem repo
-  git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
-
-# load phylesystem data in to database
-# 'creates' directive ensures idempotency
-- name: Load phylesystem data
-  command: creates={{ install_dir}}/otindex/.phylesystem $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
-  environment:
-    VENV: "{{ install_dir }}/venv"
-  args:
-    chdir: "{{ install_dir }}/otindex"
-
-- name: Download and extract ott
-  unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
-  when: ott_url is defined
-
-- name: copy taxonomy files from local machine
-  copy: src={{ item }} dest={{ install_dir }}/otindex
-  with_fileglob:
-      - "{{ taxonomy_files }}/*.csv"
-  when: taxonomy_files is defined
-
-# create the taxonomy files, if ott.csv does not exist (i.e., if not downloaded
-# in previous task)
-- name: create taxonomy files for import
-  command: creates={{ install_dir}}/otindex/ott.csv
-    $VENV/bin/python otindex/scripts/generate_taxonomy_files.py {{config_filename}}
-  environment:
-    VENV: "{{ install_dir }}/venv"
-  args:
-    chdir: "{{ install_dir }}/otindex"
-
-# make this dependent on results of "copy taxonomy files from local machine"
-- name: Load taxonomy files into database
-  command: $VENV/bin/python otindex/scripts/load_taxonomy_files.py {{ config_filename }} {{ install_dir }}/otindex
-  environment:
-    VENV: "{{ install_dir }}/venv"
-  args:
-    chdir: "{{ install_dir }}/otindex"
+- include: "load_data.yml"
+  static: no
+  when: not database_dump

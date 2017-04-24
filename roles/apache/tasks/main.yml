@@ -8,6 +8,20 @@
     - apache2
     - libapache2-mod-wsgi
 
+# check certificates and keys
+- name: check certs and keys
+  file:
+    state:  file
+    path:   '{{ item.path }}'
+    owner:  root
+    group:  root
+    mode:   '{{item.mode }}'
+  with_items:
+    - path: /etc/apache2/sites-enabled/001-opentree-ssl.conf
+      mode: '0644'
+    - path: /etc/apache2/ssl/private/opentreeoflife.org.key
+      mode: '0600'
+
 # equivalent of 'sudo a2enmod wsgi'
 - name: enble wsgi
   apache2_module: state=present name=wsgi

@@ -17,7 +17,7 @@
     group:  root
     mode:   '{{item.mode }}'
   with_items:
-    - path: /etc/apache2/sites-enabled/001-opentree-ssl.conf
+    - path: /etc/apache2/sites-enabled/001-opentreessl.conf
       mode: '0644'
     - path: /etc/apache2/ssl/private/opentreeoflife.org.key
       mode: '0600'

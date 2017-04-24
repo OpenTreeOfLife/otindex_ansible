@@ -2,8 +2,8 @@
 # default variables for peyotl tasks and template file
 
 # task vars
-install_dir: /opt/otindex
-#peyotl_config_location: "{{ install_dir}}/.peyotl"
+#install_dir: /opt/otindex
+peyotl_config_location: "../{{ install_dir}}/.peyotl"
 peyotl_branch: master
 
 # template vars

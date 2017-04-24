@@ -1,0 +1,29 @@
+###
+# Template for apache SSL config file
+###
+
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+
+    ServerName devotindex.opentreeoflife.org
+
+    ErrorLog /var/log/apache2/ssl_error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
+
+    SSLEngine on
+    SSLCertificateFile    /etc/ssl/certs/STAR_opentreeoflife_org.pem
+    SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
+
+    #   SSL Engine Options:
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+    </FilesMatch>
+    <Directory /usr/lib/cgi-bin>
+        SSLOptions +StdEnvVars
+    </Directory>
+
+</VirtualHost>
+</IfModule>

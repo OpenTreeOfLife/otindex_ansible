@@ -52,6 +52,30 @@ environment:
   VENV: "{{ install_dir }}/venv"
 ```
 
+# Pre-prepping SSL certs
+
+You will need to get these files from devapi or an existing server and plac ethem on the new machine
+
+
+/etc/apache2/sites-available/opentree_ssl.conf  
+/etc/ssl/private/opentreeoflife.org.key
+/etc/apache2/opentree-shared.conf
+
+
+The key file requires moving to ~ and changing the owner for scp.
+
+    sudo cp /etc/ssl/private/opentreeoflife.org.key ~/
+    sudo chown admin opentreeoflife.org.key
+
+
+
+# Half-working
+
+On ot40 currently requires ssh ing in and running
+
+    sudo a2enmod rewrite
+    sudo a2enmod proxy
+
 # Running the playbook
 
 You can limit the playbook to run only for specific servers (production vs

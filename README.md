@@ -52,19 +52,12 @@ environment:
   VENV: "{{ install_dir }}/venv"
 ```
 
-# Pre-prepping SSL certs
+# Pre-prepping SSL certification keys
 
-You will need to get these files from devapi or an existing server and plac ethem on the new machine
+You will need to get these key files from devapi or another existing server and putting them in these locations on the new machine
 
-/etc/ssl/private/opentreeoflife.org.key
-/etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
-
-
-Getting the key file requires moving to ~ and changing the owner for scp.
-
-    sudo cp /etc/ssl/private/opentreeoflife.org.key ~/
-    sudo chown admin opentreeoflife.org.key
-
+    /etc/ssl/private/opentreeoflife.org.key
+    /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
 
 # Run the playbook
 You can limit the playbook to run only for specific servers (production vs

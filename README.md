@@ -57,15 +57,19 @@ environment:
 You will need to get these files from devapi or an existing server and plac ethem on the new machine
 
 
-/etc/apache2/sites-available/opentree_ssl.conf  
+/etc/apache2/sites-available/opentree_ssl.conf  -> (I'm working on a template for this...)
 /etc/ssl/private/opentreeoflife.org.key
-/etc/apache2/opentree-shared.conf
 
 
-The key file requires moving to ~ and changing the owner for scp.
+
+STAR_opentree
+
+
+Getting the key file requires moving to ~ and changing the owner for scp.
 
     sudo cp /etc/ssl/private/opentreeoflife.org.key ~/
     sudo chown admin opentreeoflife.org.key
+
 
 
 
@@ -76,7 +80,9 @@ On ot40 currently requires ssh ing in and running
     sudo a2enmod rewrite
     sudo a2enmod proxy
 
-# Running the playbook
+
+
+ing the playbook
 
 You can limit the playbook to run only for specific servers (production vs
 development).
@@ -88,3 +94,24 @@ For production:
 For development:
 
     $ ansible-playbook otindex.yml -i hosts --limit development
+
+# After running ansible setup:
+ssh in,
+
+
+    source otindex/venv/bin/activate
+    cd /home/admin/otindex/ott
+    rm *
+    wget http://files.opentreeoflife.org/ott/ott3.0/ott3.0.tgz
+    tar -xzvf ott3.0.tgz
+    mv ott ott3.0
+
+
+    mv otindex/.peyotl ~/.peyotl
+    check that the paths are correct in the peyptl
+
+## If no database dump:
+    cd /home/admin/otindex/otindex/otindex/scripts
+    chmod +755 run_setup_scripts.sh
+    ./run_setup_scripts.sh ../../development.ini 
+

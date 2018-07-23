@@ -1,3 +1,3 @@
 [development]
-ot40 ansible_host=ot40.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=/home/ejmctavish/.ssh/opentree.pem
+ot31 ansible_host=ot31.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=/home/ejmctavish/.ssh/opentree.pem
 

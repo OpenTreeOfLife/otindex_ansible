@@ -7,5 +7,5 @@
 install_dir: /home/{{ username }}/otindex
 
 # other paths
-peyotl_config_location: "{{ install_dir}}/.peyotl"
+peyotl_config_location: "{{ install_dir }}/.peyotl"
 otindex_logfile_dir: "{{ install_dir}}/otindex/logs"

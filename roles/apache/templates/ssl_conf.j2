@@ -1,20 +1,34 @@
-###
-# Template for apache SSL config file
-###
+# This file is for apache 2.4+.
+#
+# Adapting SSL settings (second VirtualHost) from /etc/apache2/sites-available/default-ssl
+# in apache2 as installed in ubuntu 12.04.
+#
+# We support both HTTP and HTTPS, with two separate files in sites-available.
+# This file holds only the settings unique to the HTTPS VirtualHost, with all
+# shared configuration included from 'opentree-shared.conf'. See
+# http://serverfault.com/questions/83669/apache2-with-ssl-do-i-have-to-copy-virtualhost-blocks
+#
+# This file should be periodically reviewed as apache versions advance and
+#  'best practice' for virtual host configurations changes.
 
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
 
-    ServerName devotindex.opentreeoflife.org
+    # This is edited by restart-apache.sh
+    ServerName {{ ansible_host }}
 
-    ErrorLog /var/log/apache2/ssl_error.log
+    ErrorLog ${APACHE_LOG_DIR}/ssl_error.log
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
     LogLevel warn
 
     SSLEngine on
-    SSLCertificateFile    /etc/ssl/certs/STAR_opentreeoflife_org.pem
+    # SSLCertificateFile /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
+    # SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
+    # /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem and /etc/ssl/private/opentreeoflife.org.key get substituted by
+    # sed command in restart-apache.sh
+    SSLCertificateFile    /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
     SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
 
     #   SSL Engine Options:
@@ -24,6 +38,17 @@
     <Directory /usr/lib/cgi-bin>
         SSLOptions +StdEnvVars
     </Directory>
+
+    # Always set these headers to allow cross origin requests
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+    Header always set Access-Control-Max-Age "1000"
+    Header always set Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token"
+
+    # Added a rewrite to respond with a 200 SUCCESS on every OPTIONS request.
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
 
 </VirtualHost>
 </IfModule>

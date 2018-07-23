@@ -7,8 +7,8 @@
 - name: Clone phylesystem repo
   git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
 
-# load phylesystem data in to database
-# 'creates' directive ensures idempotency
+#load phylesystem data in to database
+#'creates' directive ensures idempotency
 - name: Load phylesystem data
   command: creates={{ install_dir}}/otindex/.phylesystem $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
   environment:
@@ -19,6 +19,22 @@
 - name: Download and extract ott
   unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
   when: ott_url is defined
+
+
+- name: clear existing tables
+  command:   $VENV/bin/python otindex/scripts/setup_db.py {{config_filename}}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
+
+
+- name: load nexson files
+  command:   $VENV/bin/python otindex/scripts/load_nexson.py  {{config_filename}}
+  environment:
+    VENV: "{{ install_dir }}/venv"
+  args:
+    chdir: "{{ install_dir }}/otindex"
 
 - name: create taxonomy files for import
   command: creates={{ install_dir}}/otindex/ott.csv

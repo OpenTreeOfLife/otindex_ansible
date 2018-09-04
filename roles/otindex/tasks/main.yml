@@ -48,8 +48,17 @@
   become: yes
   become_user: opentree
 
+- name: ensure log file exists and is writable
+  copy:
+    content: ""
+    dest: "{{ otindex_logfile_dir }}/otindex.log"
+    force: no
+    group: opentree
+    owner: opentree
+    mode: 0777
+  become: yes
+# UGH permissions hack
 
-  become_user: opentree
 # initialize database, creating database tables
 - name: Initialize otindex database
   shell: $VENV/bin/initialize_otindex_db {{ config_filename }}

@@ -3,9 +3,13 @@
 
 - name: Create shards directory
   file: path={{install_dir}}/phylesystem/shards state=directory
+  become: yes 
+  become_user: opentree
 
 - name: Clone phylesystem repo
   git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
+  become: yes 
+  become_user: opentree
 
 #load phylesystem data in to database
 #'creates' directive ensures idempotency
@@ -15,10 +19,14 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree
 
 - name: Download and extract ott
   unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes
   when: ott_url is defined
+  become: yes 
+  become_user: opentree
 
 
 - name: clear existing tables
@@ -27,6 +35,8 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree
 
 
 - name: load nexson files
@@ -35,6 +45,8 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree
 
 - name: create taxonomy files for import
   command: creates={{ install_dir}}/otindex/ott.csv
@@ -43,6 +55,8 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree
 
 - name: Load taxonomy files into database
   command: $VENV/bin/python otindex/scripts/load_taxonomy_files.py {{ config_filename }} {{ install_dir }}/otindex
@@ -50,3 +64,5 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree

@@ -7,17 +7,25 @@
     repo: https://github.com/OpenTreeOfLife/peyotl.git
     dest: "{{ install_dir }}/peyotl"
     version: "{{ peyotl_branch}}"
+  become: yes
+  become_user: opentree
 
 - name: Create dir for peyotl config file
   file: path={{peyotl_config_location}} state=directory
+  become: yes
+  become_user: opentree
 
 - name: Create peyotl config file from template
   template: src=templates/config.j2 dest={{ peyotl_config_location }}/config
+  become: yes
+
 
 - name: Install peyotl python requirements
   pip:
     requirements: "{{install_dir}}/peyotl/requirements.txt"
     virtualenv: "{{install_dir}}/venv"
+  become: yes
+  become_user: opentree
 
 - name: Install peyotl
   command: $VENV/bin/python setup.py install
@@ -25,3 +33,5 @@
     VENV: "{{install_dir}}/venv"
   args:
     chdir: "{{install_dir}}/peyotl"
+  become: yes
+  become_user: opentree

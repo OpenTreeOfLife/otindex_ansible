@@ -42,6 +42,7 @@
   template:
     src: templates/pyramid_wsgi.j2
     dest: "{{ install_dir }}/venv/pyramid.wsgi"
+  become: true
 
 - name: write apache config file
   become: true

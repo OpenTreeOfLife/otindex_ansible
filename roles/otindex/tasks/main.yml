@@ -6,11 +6,24 @@
     repo: https://github.com/OpenTreeOfLife/otindex.git
     dest: "{{ install_dir }}/otindex"
     version: "{{ otindex_branch }}"
+  become: yes
+  become_user: opentree
 
 - name: Install otindex python requirements
   pip:
     requirements: "{{ install_dir }}/otindex/requirements.txt"
     virtualenv: "{{ install_dir }}/venv"
+  become: yes 
+  become_user: opentree
+
+- name: install the package, force upgrade
+  pip: 
+    name: setuptools
+    extra_args: --upgrade
+    virtualenv: "{{ install_dir }}/venv"
+  become: yes 
+  become_user: opentree
+
 
 - name: Install otindex
   command: $VENV/bin/python setup.py install
@@ -20,16 +33,23 @@
     chdir: "{{ install_dir }}/otindex"
   notify:
     - restart apache
+  become: yes 
+  become_user: opentree
 
 # create pyramid config file
 - name: Create config file from template
   template:
     src: templates/config.j2
     dest: "{{ install_dir }}/otindex/{{ config_filename }}"
+  become: yes
 
 - name: Create log file dir
   file: path={{ otindex_logfile_dir }} state=directory
+  become: yes
+  become_user: opentree
 
+
+  become_user: opentree
 # initialize database, creating database tables
 - name: Initialize otindex database
   shell: $VENV/bin/initialize_otindex_db {{ config_filename }}
@@ -37,3 +57,5 @@
     VENV: "{{ install_dir }}/venv"
   args:
     chdir: "{{ install_dir }}/otindex"
+  become: yes 
+  become_user: opentree

@@ -11,5 +11,5 @@ phylesystem_parent: "{{ install_dir }}/phylesystem/shards/"
 repo_nexml2json: 1.2.1
 ott_dir: "{{ install_dir }}/ott"
 logging_level: debug
-logging_filepath: /tmp/peyotl-log
+logging_filepath: /{{ install_dir}}/peyotl-log
 logging_formatter: rich

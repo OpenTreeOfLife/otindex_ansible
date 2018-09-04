@@ -2,7 +2,7 @@
 # tasks for uploading database dump and loading into database
 
 - name: copy database dump from local machine
-  copy: src={{ item }} dest=/tmp/otindex.dmp
+  copy: src={{ item }} dest=/{{ install_dir }}/otindex.dmp
   with_fileglob:
       - "{{ database_dump_filename }}"
 
@@ -18,4 +18,4 @@
 - name: load database dump
   become: true
   become_user: postgres
-  command: pg_restore -a --verbose --dbname=otindex  /tmp/otindex.dmp
+  command: pg_restore -a --verbose --dbname=otindex  /{{ install_dir }}/otindex.dmp

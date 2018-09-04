@@ -22,12 +22,40 @@
         - python-psycopg2
         - python-dev
 
+    - name: Add user "opentree"
+      user:
+        name: opentree
+        shell: /bin/bash       # Defaults to /bin/bash
+        append: yes
+        state: present
+      become: true
+
+    - name: Create Folder
+      file: 
+          path: /home/opentree/.ssh
+          state: directory
+      become: true
+
+
+    - name: example copying file with owner and permissions
+      copy:
+        remote_src: yes
+        src:  /home/admin/.ssh/authorized_keys
+        dest: /home/opentree/.ssh/authorized_keys
+        owner: opentree
+        group: opentree
+        mode: 0644
+      become: true
+
+
   roles:
     - postgresql
     - peyotl
     - otindex
     - otdata
     - apache
+
+
 
   # set this at play level because used in multiple roles: peyotl and otindex
   environment:

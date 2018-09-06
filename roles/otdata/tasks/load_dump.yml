@@ -1,21 +1,22 @@
 ---
 # tasks for uploading database dump and loading into database
 
+#Copies database, but doesn't seem to actually work... I SCP'd it directly.
 - name: copy database dump from local machine
-  copy: src={{ item }} dest=/{{ install_dir }}/otindex.dmp
+  copy: src={{ item }} dest={{ install_dir }}/otindex/otindex.dmp
   with_fileglob:
       - "{{ database_dump_filename }}"
+  become: true
 
-# clear the existing data
-- name: clear database tables
-  command: $VENV/bin/python otindex/scripts/setup_db.py {{ config_filename }}
-  environment:
-    VENV: "{{ install_dir }}/venv"
-  args:
-    chdir: "{{ install_dir }}/otindex"
+#remove the existing database
+- name: load database dump
+  become: true
+  become_user: postgres
+  command: dropdb otindex
+
 
 # load the database dump into the database
 - name: load database dump
   become: true
   become_user: postgres
-  command: pg_restore -a --verbose --dbname=otindex  /{{ install_dir }}/otindex.dmp
+  command: psql otindex < "{{ install_dir }}/otindex/otindex.dmp"

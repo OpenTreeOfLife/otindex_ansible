@@ -16,7 +16,7 @@
 - name: Load phylesystem data
   command: creates={{ install_dir}}/otindex/.phylesystem $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 
@@ -32,7 +32,7 @@
 - name: clear existing tables
   command:   $VENV/bin/python otindex/scripts/setup_db.py {{config_filename}}
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 
@@ -42,7 +42,7 @@
 - name: load nexson files
   command:   $VENV/bin/python otindex/scripts/load_nexson.py  {{config_filename}}
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 
@@ -52,7 +52,7 @@
   command: creates={{ install_dir}}/otindex/ott.csv
     $VENV/bin/python otindex/scripts/generate_taxonomy_files.py {{config_filename}}
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 
@@ -61,7 +61,7 @@
 - name: Load taxonomy files into database
   command: $VENV/bin/python otindex/scripts/load_taxonomy_files.py {{ config_filename }} {{ install_dir }}/otindex
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 

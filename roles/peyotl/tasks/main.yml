@@ -23,14 +23,14 @@
 - name: Install peyotl python requirements
   pip:
     requirements: "{{install_dir}}/peyotl/requirements.txt"
-    virtualenv: "{{install_dir}}/venv"
+    virtualenv: "{{install_dir}}/../venv"
   become: yes
   become_user: opentree
 
 - name: Install peyotl
   command: $VENV/bin/python setup.py install
   environment:
-    VENV: "{{install_dir}}/venv"
+    VENV: "{{install_dir}}/../venv"
   args:
     chdir: "{{install_dir}}/peyotl"
   become: yes

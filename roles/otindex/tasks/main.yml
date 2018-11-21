@@ -12,7 +12,7 @@
 - name: Install otindex python requirements
   pip:
     requirements: "{{ install_dir }}/otindex/requirements.txt"
-    virtualenv: "{{ install_dir }}/venv"
+    virtualenv: "{{ install_dir }}/../venv"
   become: yes 
   become_user: opentree
 
@@ -20,7 +20,7 @@
   pip: 
     name: setuptools
     extra_args: --upgrade
-    virtualenv: "{{ install_dir }}/venv"
+    virtualenv: "{{ install_dir }}/../venv"
   become: yes 
   become_user: opentree
 
@@ -28,7 +28,7 @@
 - name: Install otindex
   command: $VENV/bin/python setup.py install
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   notify:
@@ -63,7 +63,7 @@
 - name: Initialize otindex database
   shell: $VENV/bin/initialize_otindex_db {{ config_filename }}
   environment:
-    VENV: "{{ install_dir }}/venv"
+    VENV: "{{ install_dir }}/../venv"
   args:
     chdir: "{{ install_dir }}/otindex"
   become: yes 

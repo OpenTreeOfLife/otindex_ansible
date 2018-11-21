@@ -10,10 +10,10 @@
 WSGIApplicationGroup %{GLOBAL}
 WSGIPassAuthorization On
 WSGIDaemonProcess pyramid user={{ username }} group=staff threads=4 \
-   python-path={{ install_dir}}/venv/lib/python2.7/site-packages
-WSGIScriptAlias / {{ install_dir }}/venv/pyramid.wsgi
+   python-path={{ install_dir}}/../venv/lib/python2.7/site-packages
+WSGIScriptAlias / {{ install_dir }}/../venv/pyramid.wsgi
 
-<Directory {{ install_dir }}/venv>
+<Directory {{ install_dir }}/../venv>
   WSGIProcessGroup pyramid
   Require all granted
 </Directory>

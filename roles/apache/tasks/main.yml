@@ -17,20 +17,20 @@
 - name: enable rewrite
   become: true
   apache2_module: state=present name=rewrite
-  notify: r
+  notify:
     - restart apache
 
 - name: enable proxy
   become: true
   apache2_module: state=present name=proxy
-  notify: r
+  notify:
     - restart apache
 
 # equivalent of 'sudo a2enmod ssl'
 - name: enable ssl
   become: true
   apache2_module: state=present name=ssl
-  notify: r
+  notify:
     - restart apache
 
 # equivalent of 'sudo a2enmod wsgi'
@@ -41,7 +41,7 @@
 - name: write pyramid.wsgi config file
   template:
     src: templates/pyramid_wsgi.j2
-    dest: "{{ install_dir }}/venv/pyramid.wsgi"
+    dest: "{{ install_dir }}/../venv/pyramid.wsgi"
   become: true
 
 - name: write apache config file
@@ -60,7 +60,7 @@
   become: true
   template:
     src: templates/ssl_conf.j2
-    dest: /etc/apache2/sites-available/opentree_ssl.conf
+    dest: /etc/apache2/sites-available/opentree-ssl.conf
 
 # check for certs and keys
 - name: check certificates and keys
@@ -72,7 +72,7 @@
     group:  '{{ item.group }}'
     mode:   '{{ item.mode }}'
   with_items:
-    - path:   /etc/apache2/sites-available/opentree_ssl.conf
+    - path:   /etc/apache2/sites-available/opentree-ssl.conf
       owner:  '{{ username }}'
       group:  '{{ username }}'
       mode:   '0644'
@@ -86,7 +86,7 @@
   become: true
   file:
     state: link
-    src:    '/etc/apache2/sites-available/opentree_ssl.conf'
+    src:    '/etc/apache2/sites-available/opentree-ssl.conf'
     dest:   '/etc/apache2/sites-enabled/000-opentreessl.conf'
     owner:  root
     group:  root

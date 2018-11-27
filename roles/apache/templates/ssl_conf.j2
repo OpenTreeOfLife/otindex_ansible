@@ -15,7 +15,7 @@
 <VirtualHost *:443>
 
     # This is edited by restart-apache.sh
-    ServerName {{ ansible host}}
+    ServerName {{ ansible_host }}
 
     ErrorLog ${APACHE_LOG_DIR}/ssl_error.log
 

@@ -1,6 +1,6 @@
 # This file is for apache 2.4+.
 #
-# Adapting SSL settings (second VirtualHost) from /etc/apache2/sites-available/default-ssl
+# Adapting SSL settings (second VirtualHost) from /etc/apache2/sites-available/default-ssl 
 # in apache2 as installed in ubuntu 12.04.
 #
 # We support both HTTP and HTTPS, with two separate files in sites-available.
@@ -10,12 +10,12 @@
 #
 # This file should be periodically reviewed as apache versions advance and
 #  'best practice' for virtual host configurations changes.
-
+ 
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
 
     # This is edited by restart-apache.sh
-    ServerName {{ ansible_host }}
+    ServerName {{ ansible host}}
 
     ErrorLog ${APACHE_LOG_DIR}/ssl_error.log
 
@@ -26,10 +26,10 @@
     SSLEngine on
     # SSLCertificateFile /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
     # SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
-    # /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem and /etc/ssl/private/opentreeoflife.org.key get substituted by
+    # /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem and /etc/ssl/private/opentreeoflife.org.key get substituted by 
     # sed command in restart-apache.sh
     SSLCertificateFile    /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
-    SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
+    SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key 
 
     #   SSL Engine Options:
     <FilesMatch "\.(cgi|shtml|phtml|php)$">
@@ -39,16 +39,41 @@
         SSLOptions +StdEnvVars
     </Directory>
 
-    # Always set these headers to allow cross origin requests
-    Header always set Access-Control-Allow-Origin "*"
-    Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
-    Header always set Access-Control-Max-Age "1000"
-    Header always set Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token"
+    # Moving all WSGI configuration here, so we only run one instance of web2py on HTTPS.
+    # This should prevent our broken session problem as documented here:
+    #   https://github.com/OpenTreeOfLife/opentree/issues/804
+    WSGIDaemonProcess web2py user=opentree group=opentree display-name=%{GROUP}
+    WSGIProcessGroup web2py
+    WSGIScriptAlias /web2py /home/opentree/web2py/wsgihandler.py
 
-    # Added a rewrite to respond with a 200 SUCCESS on every OPTIONS request.
-    RewriteEngine On
-    RewriteCond %{REQUEST_METHOD} OPTIONS
-    RewriteRule ^(.*)$ $1 [R=200,L]
+    # We don't want the scriptalias to override mappings for
+    #  treemachine and taxomachine... seems not to.
+
+    <Directory /home/opentree/web2py>
+      AllowOverride None
+      Require all denied
+      <Files wsgihandler.py>
+        Require all granted
+      </Files>
+    </Directory>
+
+    AliasMatch ^/([^/]+)/static/(.*)            /home/opentree/web2py/applications/$1/static/$2
+    <Directory /home/opentree/web2py/applications/*/static/>
+      Require all granted
+    </Directory>
+
+   WSGIDaemonProcess pyramid user=admin group=staff threads=4 \
+   python-path=/home/opentree/repo/../venv/lib/python2.7/site-packages
+   WSGIScriptAlias /otindex /home/opentree/repo/../venv/pyramid.wsgi
+
+   <Directory /home/opentree/repo/../venv>
+      WSGIProcessGroup pyramid
+      Require all granted
+   </Directory>
+
+
+    # OPENTREE SHARED CONFIGURATION
+    Include /etc/apache2/opentree-shared.conf
 
 </VirtualHost>
 </IfModule>

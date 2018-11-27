@@ -44,23 +44,29 @@
     dest: "{{ install_dir }}/../venv/pyramid.wsgi"
   become: true
 
-- name: write apache config file
-  become: true
-  template:
-    src: templates/apache_conf.j2
-    dest: /etc/apache2/conf-available/otindex.conf
+#- name: write apache config file
+#  become: true
+#  template:
+#    src: templates/apache_conf.j2
+#    dest: /etc/apache2/conf-available/otindex.conf
 
-- name: enable apache conf file
-  become: true
-  command: a2enconf otindex
-  notify:
-    - restart apache
+#- name: enable apache conf file
+#  become: true
+#  command: a2enconf otindex
+#  notify:
+#    - restart apache
 
 - name: write apache ssl sites available file
   become: true
   template:
     src: templates/ssl_conf.j2
     dest: /etc/apache2/sites-available/opentree-ssl.conf
+
+- name: write opentree_shared.conf
+  become: true
+  template:
+    src: templates/opentree_shared_conf.j2
+    dest: /etc/apache2/opentree-shared.conf
 
 # check for certs and keys
 - name: check certificates and keys

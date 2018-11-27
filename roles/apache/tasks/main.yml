@@ -12,7 +12,7 @@
 - name: enable headers
   become: true
   apache2_module: state=present name=headers
-  ignore_configcheck: True
+#  ignore_configcheck: True
 
 - name: enable rewrite
   become: true

@@ -39,6 +39,12 @@
   become_user: opentree
 
 
+- name: clear existing files
+  shell:   "rm {{ install_dir }}/otindex/*.csv"
+  become: yes 
+  become_user: opentree
+
+
 - name: load nexson files
   command:   $VENV/bin/python otindex/scripts/load_nexson.py  {{config_filename}}
   environment:

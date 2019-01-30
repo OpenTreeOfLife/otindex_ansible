@@ -35,19 +35,13 @@
 
     # phylesystem-api is provided via web2py
     # N.B. that we should match "bare" URLs like '/v3/study' to create a resource!
- 
     RewriteEngine on
     RewriteRule ^/phylesystem/(.*) /web2py/phylesystem/$1 [PT]
 
-
+    
     RewriteEngine on
     RewriteRule ^/v3/study(.*) /web2py/phylesystem/v1/study$1 [PT]
 
-
-    # phylesystem-api is provided via web2py
-    # N.B. that we should match "bare" URLs like '/v3/study' to create a resource!
-    RewriteEngine on
-    RewriteRule ^/phylesystem/v3/study(.*) /web2py/phylesystem/v1/study$1 [PT]
 
     # collections-api is provided via web2py
     RewriteEngine on

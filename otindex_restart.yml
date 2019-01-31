@@ -1,0 +1,66 @@
+---
+- hosts: all
+  gather_facts: False
+
+# start by installing required packages (note that postgresql packages
+# installed separately in postgresql role and apache packages installed
+# in apache role)
+
+  pre_tasks:
+    # python2 might not be installed on server (e.g. Ubuntu16)
+    - name: install python 2
+      become: true
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    - name: Install packages
+      become: true
+      apt: name={{ item }} state=present
+      with_items:
+        - virtualenv
+        - libpq-dev
+        - git-core
+        - build-essential
+        - python-psycopg2
+        - python-dev
+
+    - name: Add user "opentree"
+      user:
+        name: opentree
+        shell: /bin/bash       # Defaults to /bin/bash
+        append: yes
+        state: present
+      become: true
+
+    - name: Create Folder
+      file: 
+          path: /home/opentree/.ssh
+          state: directory
+      become: true
+
+
+    - name: example copying file with owner and permissions
+      copy:
+        remote_src: yes
+        src:  /home/admin/.ssh/authorized_keys
+        dest: /home/opentree/.ssh/authorized_keys
+        owner: opentree
+        group: opentree
+        mode: 0644
+      become: true
+
+
+  roles:
+    - apache
+
+
+
+  # set this at play level because used in multiple roles: peyotl and otindex
+  environment:
+      PEYOTL_CONFIG_FILE: "{{ peyotl_config_location }}/config"
+
+  handlers:
+      - name: restart apache
+        become: true
+        service: name=apache2 state=restarted
+
+      - name: restart postgresql
+        service: name=postgresql state=restarted

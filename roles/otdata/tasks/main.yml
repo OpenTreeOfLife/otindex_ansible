@@ -3,6 +3,11 @@
 # either loads data on server, or copies local database dump file,
 # depending on setting of database_dump in group_vars
 
+
+- debug:
+    msg: "Database dump has value {{ database_dump }} and location {{ database_dump_filename }}"
+
+
 - include: "load_dump.yml"
   static: no
   when: database_dump

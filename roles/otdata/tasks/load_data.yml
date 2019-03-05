@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "Running load_data.yml"
+
 # tasks for downloading data and loading into database
 
 - name: Create shards directory
@@ -40,7 +43,9 @@
 
 
 - name: clear existing files
-  shell:   "rm {{ install_dir }}/otindex/*.csv"
+  file:
+    state: absent
+    path: "{{ install_dir }}/otindex/*.csv"
   become: yes 
   become_user: opentree
 

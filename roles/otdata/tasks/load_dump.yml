@@ -1,6 +1,10 @@
 ---
 # tasks for uploading database dump and loading into database
 
+
+- debug:
+    msg: "Running load_dump.yml"
+
 #Copies database, but doesn't seem to actually work... I SCP'd it directly.
 - name: copy database dump from local machine
   copy: src={{ item }} dest={{ install_dir }}/otindex/otindex.dmp
@@ -9,14 +13,21 @@
   become: true
 
 #remove the existing database
-- name: load database dump
+- name: remove existing database
   become: true
   become_user: postgres
   command: dropdb otindex
+
+
+#remove the existing database
+- name: create new database
+  become: true
+  become_user: postgres
+  command: createdb otindex
 
 
 # load the database dump into the database
 - name: load database dump
   become: true
   become_user: postgres
-  command: psql otindex < "{{ install_dir }}/otindex/otindex.dmp"
+  shell: psql otindex < {{ install_dir }}/otindex/otindex.dmp

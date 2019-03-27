@@ -4,13 +4,15 @@
 
 # tasks for downloading data and loading into database
 
-- name: Create shards directory
-  file: path={{install_dir}}/phylesystem/shards state=directory
+- name: Create phylesystem directory
+  file: path={{ phylesystem_location }} state=directory
   become: yes 
   become_user: opentree
 
+#NOTE: Doesn't currently handle shards
+
 - name: Clone phylesystem repo
-  git: repo={{phylesystem_repo}} dest={{install_dir}}/phylesystem/shards/phylesystem
+  git: repo={{phylesystem_repo}} dest={{ phylesystem_location }}
   become: yes 
   become_user: opentree
 

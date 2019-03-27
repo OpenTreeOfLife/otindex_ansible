@@ -1,3 +1,4 @@
 ---
 # task vars
 otindex_branch: options
+otindex_logging_filepath: "{{ otindex_logfile_dir }}/otindex.log"

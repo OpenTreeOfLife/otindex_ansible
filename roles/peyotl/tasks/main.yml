@@ -35,3 +35,14 @@
     chdir: "{{install_dir}}/peyotl"
   become: yes
   become_user: opentree
+
+- name: ensure peyotl log file exists and is writable
+  copy:
+    content: ""
+    dest: "{{ peyotl_logging_filepath }}"
+    force: no
+    group: opentree
+    owner: opentree
+    mode: 0775
+  become: true
+# UGH permissions hack

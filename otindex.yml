@@ -36,6 +36,15 @@
           state: directory
       become: true
 
+    - name: Create log file dir
+      file: 
+        path: "{{ otindex_logfile_dir }}"
+        state: directory
+        force: no
+        mode: 0775
+        group: opentree
+        owner: opentree
+      become: yes
 
     - name: example copying file with owner and permissions
       copy:

@@ -43,21 +43,16 @@
     dest: "{{ install_dir }}/otindex/{{ config_filename }}"
   become: yes
 
-- name: Create log file dir
-  file: path={{ otindex_logfile_dir }} state=directory
-  become: yes
-  become_user: opentree
-
-- name: ensure log file exists and is writable
+- name: ensure otindex log file exists and is writable
   copy:
     content: ""
-    dest: "{{ otindex_logfile_dir }}/otindex.log"
+    dest: "{{ otindex_logging_filepath }}"
     force: no
     group: opentree
     owner: opentree
     mode: 0777
-  become: yes
-# UGH permissions hack
+  become: true
+# UGH permissions hack. Whyyyy?
 
 # initialize database, creating database tables
 - name: Initialize otindex database

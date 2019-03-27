@@ -3,13 +3,13 @@
 
 # task vars
 #install_dir: /opt/otindex
-peyotl_config_location: "../{{ install_dir}}/.peyotl"
+peyotl_config_location: "/home/opentree/.peyotl"
 peyotl_branch: master
 
 # template vars
-phylesystem_parent: "{{ install_dir }}/phylesystem/shards/"
+phylesystem_parent: "{{ install_dir}}/phylesystem-1_par/"
 repo_nexml2json: 1.2.1
 ott_dir: "{{ install_dir }}/ott"
 logging_level: debug
-logging_filepath: "{{ install_dir}}/peyotl-log"
+peyotl_logging_filepath: "{{ otindex_logfile_dir }}/peyotl.log"
 logging_formatter: rich

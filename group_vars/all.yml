@@ -9,4 +9,22 @@ install_dir: /home/opentree/repo
 # other paths
 peyotl_config_location: "/home/opentree/.peyotl" #I haven't figured out how to make it read the peyotl config from other locations
 otindex_logfile_dir: "/home/opentree/log"
-phylesystem_location: "{{ install_dir}}/phylesystem-1_par/phylesystem-1"
+
+#Current otindexdev setup
+phylesystem_parent: "{{ install_dir }}/phylesystem-0_par"
+phylesystem_location: "{{ phylesystem_parent }}/phylesystem-0"
+
+#CHALLENGE: 
+# Needs to mesh with germinator push.sh
+# https://github.com/OpenTreeOfLife/germinator/blob/master/deploy/setup/install-api.sh#L96
+# Which defaults to 
+# phylesystem=repo/${OPENTREE_DOCSTORE}_par/$OPENTREE_DOCSTORE
+
+
+#for production, should be
+#phylesystem_parent: "{{ install_dir }}/phylesystem-1_par"
+#phylesystem_location: "{{ phylesystem_parent }}/phylesystem-1"
+
+#for devapi, current setup is
+#phylesystem_parent: "{{ install_dir }}/phylesystem/shards/"
+#phylesystem_location: "{{ phylesystem_parent }}/phylesystem"

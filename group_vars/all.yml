@@ -7,7 +7,8 @@
 install_dir: /home/opentree/repo
 
 # other paths
-peyotl_config_location: "/home/opentree/.peyotl" #I haven't figured out how to make it read the peyotl config from other locations
+peyotl_config_location: "/home/ubuntu/.peyotl" 
+#I haven't figured out how to make it read the peyotl config from other locations
 otindex_logfile_dir: "/home/opentree/log"
 
 #Current otindexdev setup

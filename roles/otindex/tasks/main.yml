@@ -26,7 +26,7 @@
 
 
 - name: Install otindex
-  command: $VENV/bin/python setup.py install
+  command: $VENV/bin/python setup.py develop
   environment:
     VENV: "{{ install_dir }}/../venv"
   args:
@@ -52,7 +52,7 @@
     owner: opentree
     mode: 0777
   become: true
-# UGH permissions hack. Whyyyy?
+# UGH permissions hack so taht pyramids can write to file
 
 # initialize database, creating database tables
 - name: Initialize otindex database

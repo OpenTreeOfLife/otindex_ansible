@@ -44,6 +44,5 @@
     force: no
     group: opentree
     owner: opentree
-    mode: 0775
   become: true
 # UGH permissions hack

@@ -50,9 +50,7 @@
     force: no
     group: opentree
     owner: opentree
-    mode: 0777
   become: true
-# UGH permissions hack so taht pyramids can write to file
 
 # initialize database, creating database tables
 - name: Initialize otindex database

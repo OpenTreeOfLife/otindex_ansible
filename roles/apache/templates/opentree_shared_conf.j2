@@ -54,6 +54,15 @@
     # N.B. that we should match "bare" URLs like '/v3/amendment' to create a resource!
     RewriteRule ^/v3/amendments(.*) /web2py/phylesystem/v1/amendments$1 [PT]
     RewriteRule ^/v3/amendment(.*)  /web2py/phylesystem/v1/amendment$1 [PT]
+    # amendments-api is provided via web2py
+
+    # some utility methods (undocumented) are mainly used by OpenTree webapps;
+    # these are provided by web2py, and typically unchanged since v1
+    RewriteRule ^/v3/phylesystem_config /web2py/phylesystem/v1/phylesystem_config [PT]
+    RewriteRule ^/v3/render_markdown /web2py/phylesystem/v1/render_markdown [PT]
+    RewriteRule ^/v3/trees_in_synth /web2py/phylesystem/v1/trees_in_synth [PT]
+    RewriteRule ^/v3/include_tree_in_synth /web2py/phylesystem/v1/include_tree_in_synth [PT]
+    RewriteRule ^/v3/exclude_tree_from_synth /web2py/phylesystem/v1/exclude_tree_from_synth [PT]
 
     # studies-api is provided via Pyramids
     # N.B. that we should match "bare" URLs like '/v3/studies' to create a resource!

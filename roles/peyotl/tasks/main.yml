@@ -13,7 +13,7 @@
 - name: Create dir for peyotl config file
   file: path={{peyotl_config_location}} state=directory
   become: yes
-  become_user: ubuntu
+  become_user: opentree
 #Why does this need to be in the admin home?
 
 - name: Create peyotl config file from template

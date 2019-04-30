@@ -34,7 +34,11 @@
       file: 
           path: /home/opentree/.ssh
           state: directory
+          mode: 0700
+          group: opentree
+          owner: opentree
       become: true
+      become_user: opentree
 
     - name: Create log file dir
       file: 
@@ -49,7 +53,7 @@
     - name: example copying file with owner and permissions
       copy:
         remote_src: yes
-        src:  /home/ubuntu/.ssh/authorized_keys
+        src:  /home/admin/.ssh/authorized_keys
         dest: /home/opentree/.ssh/authorized_keys
         owner: opentree
         group: opentree

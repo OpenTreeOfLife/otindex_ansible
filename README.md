@@ -55,6 +55,16 @@ environment:
 # Pre-prepping SSL certification keys
 
 You will need to get these key files from devapi or another existing server and putting them in these locations on the new machine
+e.g.
+scp ../secrets/opentreeoflife.org.key ot45:
+scp ../secrets/STAR_opentreeoflife_org.pem ot45:
+
+ssh in:
+sudo mkdir /etc/ssl/certs/opentree
+sudo mv STAR_opentreeoflife_org.pem /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
+sudo mv opentreeoflife.org.key /etc/ssl/private/opentreeoflife.org.key
+
+
 
     /etc/ssl/private/opentreeoflife.org.key
     /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem

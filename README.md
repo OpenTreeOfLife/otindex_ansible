@@ -69,6 +69,25 @@ sudo mv opentreeoflife.org.key /etc/ssl/private/opentreeoflife.org.key
     /etc/ssl/private/opentreeoflife.org.key
     /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
 
+
+
+# Other aspects of setting up machine from scratch:
+
+If Ubuntu machine, need to create admin user
+
+    sudo adduser --disabled-password admin --ingroup admin
+    sudo su - admin
+
+then as admin:
+
+    mkdir .ssh
+    chmod 700 .ssh
+    touch .ssh/authorized_keys
+    chmod 600 .ssh/authorized_keys
+    vim .ssh/authorized_keys 
+
+
+
 # Run the playbook
 You can limit the playbook to run only for specific servers (production vs
 development).

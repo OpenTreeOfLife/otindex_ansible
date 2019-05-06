@@ -78,7 +78,7 @@ If Ubuntu machine, need to create admin user
 
 sudo visudo
 edit to:
-## Members of the admin group may gain root privileges
+ ## Members of the admin group may gain root privileges
 %admin ALL=(ALL) NOPASSWD:ALL
 
 

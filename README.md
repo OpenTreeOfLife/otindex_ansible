@@ -75,6 +75,13 @@ sudo mv opentreeoflife.org.key /etc/ssl/private/opentreeoflife.org.key
 
 If Ubuntu machine, need to create admin user
 
+
+sudo visudo
+edit to:
+## Members of the admin group may gain root privileges
+%admin ALL=(ALL) NOPASSWD:ALL
+
+
     sudo adduser --disabled-password admin --ingroup admin
     sudo su - admin
 
@@ -82,10 +89,9 @@ then as admin:
 
     mkdir .ssh
     chmod 700 .ssh
-    touch .ssh/authorized_keys
+    sudo cp /home/ubuntu/.ssh/authorized_keys .ssh/authorized_keys
     chmod 600 .ssh/authorized_keys
-    vim .ssh/authorized_keys 
-
+ 
 
 
 # Run the playbook

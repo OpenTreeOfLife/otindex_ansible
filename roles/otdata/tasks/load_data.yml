@@ -16,16 +16,6 @@
   become: yes 
   become_user: opentree
 
-#load phylesystem data in to database
-#'creates' directive ensures idempotency
-#- name: Load phylesystem data
-#  command: creates={{ install_dir}}/otindex/.phylesystem $VENV/bin/python otindex/scripts/load_nexson.py {{config_filename}}
-#  environment:
-#    VENV: "{{ install_dir }}/../venv"
-#  args:
-#    chdir: "{{ install_dir }}/otindex"
-#  become: yes 
-#  become_user: opentree
 
 - name: Download and extract ott
   unarchive: src={{ott_url}} dest={{install_dir}} remote_src=yes

@@ -69,6 +69,11 @@
     # and that needs the prefix from wsgi
     RewriteEngine on
     RewriteRule ^/v3/studies(.*) /otindex/v3/studies$1 [PT]
+    # rotl was calling with a training slash - rewrite to without.
+    RewriteRule ^/otindex/v3/studies/properties/ /otindex/v3/studies/properties [PT]
+    RewriteRule ^/otindex/v3/studies/find_studies/ /otindex/v3/studies/find_studies [PT]
+
+
 
     # 1983 = ws_wrapper (around 1984: otc-tol-ws from otctera)
     <Location /v3/tree_of_life>

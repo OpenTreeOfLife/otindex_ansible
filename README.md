@@ -73,14 +73,18 @@ sudo mv opentreeoflife.org.key /etc/ssl/private/opentreeoflife.org.key
 
 # Other aspects of setting up machine from scratch:
 
-If Ubuntu machine, need to create admin user
+If Ubuntu machine, need to create admin user that has passwordless access
 
+To set up passwordless access
 
-sudo visudo
-edit to:
- ## Members of the admin group may gain root privileges
-%admin ALL=(ALL) NOPASSWD:ALL
+    sudo visudo  
 
+edit to:  
+
+    ## Members of the admin group may gain root privileges  
+    %admin ALL=(ALL) NOPASSWD:ALL  
+
+And then create an new admin user named admin
 
     sudo adduser --disabled-password admin --ingroup admin
     sudo su - admin

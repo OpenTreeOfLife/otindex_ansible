@@ -89,7 +89,12 @@ then as admin:
 
     mkdir .ssh
     chmod 700 .ssh
-    sudo cp /home/ubuntu/.ssh/authorized_keys .ssh/authorized_keys
+    sudo cat /home/ubuntu/.ssh/authorized_keys 
+
+copy contents into:
+
+    vim .ssh/authorized_keys
+    
     chmod 600 .ssh/authorized_keys
  
 

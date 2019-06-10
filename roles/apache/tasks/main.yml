@@ -8,6 +8,17 @@
     - apache2
     - libapache2-mod-wsgi
 
+- name: write apache ssl sites available file
+  become: true
+  template:
+    src: templates/ssl_conf.j2
+    dest: /etc/apache2/sites-available/opentree-ssl.conf
+
+- name: write opentree_shared.conf
+  become: true
+  template:
+    src: templates/opentree_shared_conf.j2
+    dest: /etc/apache2/opentree-shared.conf
 
 - name: enable headers
   become: true
@@ -55,18 +66,6 @@
   command: a2enconf servername
   notify:
     - restart apache
-
-- name: write apache ssl sites available file
-  become: true
-  template:
-    src: templates/ssl_conf.j2
-    dest: /etc/apache2/sites-available/opentree-ssl.conf
-
-- name: write opentree_shared.conf
-  become: true
-  template:
-    src: templates/opentree_shared_conf.j2
-    dest: /etc/apache2/opentree-shared.conf
 
 # check for certs and keys
 - name: check certificates and keys

@@ -71,6 +71,21 @@ sudo mv opentreeoflife.org.key /etc/ssl/private/opentreeoflife.org.key
 
 
 
+# Run the playbook
+You can limit the playbook to run only for specific servers (production vs
+development).
+
+For production:
+
+    $ ansible-playbook otindex.yml -i hosts --limit production
+
+For development:
+
+    $ ansible-playbook otindex.yml -i hosts --limit development
+
+
+
+
 # Other aspects of setting up machine from scratch:
 
 If Ubuntu machine, need to create admin user that has passwordless access
@@ -102,15 +117,67 @@ copy contents into:
     chmod 600 .ssh/authorized_keys
  
 
+ ### Adding Scratch (from BenRi)
+```
+ $ sudo swapon --show
 
-# Run the playbook
-You can limit the playbook to run only for specific servers (production vs
-development).
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           7.8G        142M        7.3G         12M        379M        7.4G
+Swap:            0B          0B          0B
 
-For production:
+$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            3.9G     0  3.9G   0% /dev
+tmpfs           798M  804K  797M   1% /run
+/dev/xvda1      245G  109G  136G  45% /
+tmpfs           3.9G  8.0K  3.9G   1% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/loop3       18M   18M     0 100% /snap/amazon-ssm-agent/1455
+/dev/loop1       90M   90M     0 100% /snap/core/7713
+/dev/loop0       18M   18M     0 100% /snap/amazon-ssm-agent/1480
+/dev/loop2       89M   89M     0 100% /snap/core/7396
+tmpfs           798M     0  798M   0% /run/user/1002
 
-    $ ansible-playbook otindex.yml -i hosts --limit production
+$ sudo fallocate -l 16G /mnt/16GB-manually-added.swap
 
-For development:
+$ ls -lah /mnt/16GB-manually-added.swap 
+-rw-r--r-- 1 root root 16G Oct  9 15:45 /mnt/16GB-manually-added.swap
 
-    $ ansible-playbook otindex.yml -i hosts --limit development
+$ sudo chmod 600 /mnt/16GB-manually-added.swap
+
+$ ls -lah /mnt/16GB-manually-added.swap 
+-rw------- 1 root root 16G Oct  9 15:45 /mnt/16GB-manually-added.swap
+
+$ sudo mkswap /mnt/16GB-manually-added.swap 
+Setting up swapspace version 1, size = 16 GiB (17179865088 bytes)
+no label, UUID=ffbda676-075b-4a09-a072-2339dfd2d77b
+
+$ ls /mnt/
+16GB-manually-added.swap
+
+$ sudo swapon /mnt/16GB-manually-added.swap
+
+$ sudo swapon --show
+NAME                          TYPE SIZE USED PRIO
+/mnt/16GB-manually-added.swap file  16G   0B   -2
+
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           7.8G        217M        7.2G         12M        416M        7.3G
+Swap:           15G          0B         15G
+
+$ sudo cp /etc/fstab /etc/fstab.bak
+
+$ echo '/mnt/16GB-manually-added.swap none swap sw 0 0' | sudo tee -a /etc/fstab
+/mnt/16GB-manually-added.swap none swap sw 0 0
+
+$ cat /etc/fstab
+LABEL=cloudimg-rootfs   /    ext4   defaults,discard    0 0
+/mnt/16GB-manually-added.swap none swap sw 0 0
+
+$ cat /etc/fstab.bak 
+LABEL=cloudimg-rootfs   /    ext4   defaults,discard    0 0
+
+```

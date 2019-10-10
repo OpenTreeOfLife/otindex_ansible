@@ -117,7 +117,7 @@ copy contents into:
     chmod 600 .ssh/authorized_keys
  
 
- ### Adding Scratch (from BenRi)
+ ### Adding Swap (from BenRi)
 ```
  $ sudo swapon --show
 

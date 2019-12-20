@@ -23,6 +23,10 @@
   become: yes 
   become_user: opentree
 
+#- name: move ott dir
+#  shell: "mv  {{ install_dir }}/ott3.1 {{ install_dir }}/ott"
+#  become: yes 
+#  become_user: opentree
 
 - name: clear existing tables
   command:   $VENV/bin/python otindex/scripts/setup_db.py {{config_filename}}
@@ -33,11 +37,18 @@
   become: yes 
   become_user: opentree
 
-
+# THIS DOESN"T WORK!
+# Grrr
 - name: clear existing files
   file:
     state: absent
     path: "{{ install_dir }}/otindex/*.csv"
+  become: yes 
+  become_user: opentree
+
+# This will fail if the files are absent
+- name: clear existing tables FOR REAL
+  shell: "rm  {{ install_dir }}/otindex/*.csv"
   become: yes 
   become_user: opentree
 

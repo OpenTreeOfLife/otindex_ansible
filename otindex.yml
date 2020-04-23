@@ -53,7 +53,7 @@
     - name: example copying file with owner and permissions
       copy:
         remote_src: yes
-        src:  /home/admin/.ssh/authorized_keys
+        src:  /home/ubuntu/.ssh/authorized_keys
         dest: /home/opentree/.ssh/authorized_keys
         owner: opentree
         group: opentree

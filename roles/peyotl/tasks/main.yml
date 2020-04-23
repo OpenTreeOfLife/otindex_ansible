@@ -21,12 +21,12 @@
   become: yes
 
 
-- name: Install peyotl python requirements
-  pip:
-    requirements: "{{install_dir}}/peyotl/requirements.txt"
-    virtualenv: "{{install_dir}}/../venv"
-  become: yes
-  become_user: opentree
+#- name: Install peyotl python requirements
+#  pip:
+#    requirements: "{{install_dir}}/peyotl/requirements.txt"
+#    virtualenv: "{{install_dir}}/../venv"
+#  become: yes
+# become_user: opentree
 
 - name: Install peyotl
   command: $VENV/bin/python setup.py install

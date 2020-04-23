@@ -24,5 +24,5 @@ otindex_logfile_dir: "/home/opentree/log"
 #phylesystem_location: "{{ phylesystem_parent }}/phylesystem-1"
 
 #for devapi, current setup is
-#phylesystem_parent: "{{ install_dir }}/phylesystem/shards/"
-#phylesystem_location: "{{ phylesystem_parent }}/phylesystem"
+phylesystem_parent: "{{ install_dir }}/phylesystem/shards/"
+phylesystem_location: "{{ phylesystem_parent }}/phylesystem"

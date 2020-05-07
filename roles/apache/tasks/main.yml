@@ -87,14 +87,14 @@
 #      mode:   '0600'
 
 
-#- name: check certificate link
-#  become: true
-#  file:
-#    state: link
-#    src:    '/etc/apache2/sites-available/opentree-ssl.conf'
-#    dest:   '/etc/apache2/sites-enabled/001-opentree-ssl.conf'
-#    owner:  root
-#    group:  root
+- name: check certificate link
+  become: true
+  file:
+    state: link
+    src:    '/etc/apache2/sites-available/opentree-ssl.conf'
+    dest:   '/etc/apache2/sites-enabled/001-opentree-ssl.conf'
+    owner:  root
+    group:  root
 
 - name: ensure apache is running
   become: true

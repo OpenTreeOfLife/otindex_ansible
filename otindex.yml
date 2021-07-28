@@ -21,6 +21,7 @@
         - build-essential
 #        - python-psycopg2-binary
         - python-dev
+        - python-pip   # for setuptols, pkg_resources, etc.
 
     - name: Add user "opentree"
       user:

@@ -26,7 +26,6 @@
       user:
         name: opentree
         shell: /bin/bash       # Defaults to /bin/bash
-        append: yes
         state: present
       become: true
 

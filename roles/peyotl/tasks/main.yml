@@ -25,6 +25,7 @@
   pip:
     requirements: "{{install_dir}}/peyotl/requirements.txt"
     virtualenv: "{{install_dir}}/../venv"
+    virtualenv_python: "python2"
   become: yes
   become_user: opentree
 

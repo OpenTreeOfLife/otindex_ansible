@@ -9,7 +9,7 @@
 
 #devotindex ansible_host=devotindex.opentreeoflife.org ansible_user=ubuntu ansible_ssh_private_key_file=/Users/jima/.ssh/opentree/production.pem ansible_python_interpreter=/usr/bin/python3
 
-devotindex ansible_host=devotindex.opentreeoflife.org ansible_user=ubuntu ansible_ssh_private_key_file=/Users/jima/.ssh/opentree/production.pem
+devotindex ansible_host=devotindex.opentreeoflife.org ansible_user=ubuntu ansible_ssh_private_key_file=/Users/jima/.ssh/opentree/production.pem ansible_python_interpreter=/usr/bin/python2
 
 [devapi]
 #devapi ansible_host=devapi.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=/Users/jima/.ssh/id_rsa

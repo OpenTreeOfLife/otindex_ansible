@@ -16,7 +16,7 @@
       apt: name={{ item }} state=present
       with_items:
         - virtualenv
-        -  libpq-dev
+        - libpq-dev
         - git-core
         - build-essential
 #        - python-psycopg2-binary

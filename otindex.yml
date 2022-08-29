@@ -16,17 +16,17 @@
       apt: name={{ item }} state=present
       with_items:
         - virtualenv
-        -  libpq-dev
+        - libpq-dev
         - git-core
         - build-essential
 #        - python-psycopg2-binary
         - python-dev
+        - python-pip   # for setuptols, pkg_resources, etc.
 
     - name: Add user "opentree"
       user:
         name: opentree
         shell: /bin/bash       # Defaults to /bin/bash
-        append: yes
         state: present
       become: true
 
@@ -53,7 +53,7 @@
     - name: example copying file with owner and permissions
       copy:
         remote_src: yes
-        src:  /home/admin/.ssh/authorized_keys
+        src:  /home/ubuntu/.ssh/authorized_keys
         dest: /home/opentree/.ssh/authorized_keys
         owner: opentree
         group: opentree

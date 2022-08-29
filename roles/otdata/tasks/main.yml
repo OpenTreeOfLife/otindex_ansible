@@ -8,10 +8,8 @@
     msg: "Database dump has value {{ database_dump }} and location {{ database_dump_filename }}"
 
 
-- include: "load_dump.yml"
-  static: no
+- include_tasks: "load_dump.yml"
   when: database_dump
 
-- include: "load_data.yml"
-  static: no
+- include_tasks: "load_data.yml"
   when: not database_dump

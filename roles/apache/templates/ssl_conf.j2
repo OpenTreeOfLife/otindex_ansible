@@ -22,14 +22,11 @@
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
     LogLevel warn
-
     SSLEngine on
-    # SSLCertificateFile /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
-    # SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key
-    # /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem and /etc/ssl/private/opentreeoflife.org.key get substituted by 
-    # sed command in restart-apache.sh
-    SSLCertificateFile    /etc/ssl/certs/opentree/STAR_opentreeoflife_org.pem
-    SSLCertificateKeyFile /etc/ssl/private/opentreeoflife.org.key 
+
+    # Certificates copied by hand or using ot-private directory
+    SSLCertificateFile    /etc/letsencrypt/live/opentreeoflife.org/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/opentreeoflife.org/privkey.pem
 
     #   SSL Engine Options:
     <FilesMatch "\.(cgi|shtml|phtml|php)$">

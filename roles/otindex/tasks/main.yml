@@ -6,6 +6,7 @@
     repo: https://github.com/OpenTreeOfLife/otindex.git
     dest: "{{ install_dir }}/otindex"
     version: "{{ otindex_branch }}"
+    force: yes
   become: yes
   become_user: opentree
 
@@ -13,6 +14,7 @@
   pip:
     requirements: "{{ install_dir }}/otindex/requirements.txt"
     virtualenv: "{{ install_dir }}/../venv"
+    virtualenv_python: python3
   become: yes 
   become_user: opentree
 
@@ -21,6 +23,7 @@
     name: setuptools
     extra_args: --upgrade
     virtualenv: "{{ install_dir }}/../venv"
+    virtualenv_python: python3
   become: yes 
   become_user: opentree
 

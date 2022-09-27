@@ -24,6 +24,7 @@
 - name: Install peyotl python requirements
   pip:
     virtualenv: "{{install_dir}}/../venv"
+    virtualenv_python: python3
     requirements: "{{install_dir}}/peyotl/requirements.txt"
     ##This should also work, if you comment out `virtualenv` above
     # executable: "{{install_dir}}/../venv/bin/pip"

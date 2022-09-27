@@ -16,4 +16,4 @@ devotindex ansible_host=devotindex.opentreeoflife.org ansible_user=ubuntu ansibl
 devapi ansible_host=devapi.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=/Users/jima/.ssh/opentree/production.pem
 
 [production]
-otindex ansible_host=otindex.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=/home/ejmctavish/.ssh/opentree.pem
+otindex ansible_host=otindex.opentreeoflife.org ansible_user=admin ansible_ssh_private_key_file=~/.ssh/opentree.pem ansible_python_interpreter=/usr/bin/python2

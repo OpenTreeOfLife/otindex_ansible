@@ -3,6 +3,8 @@
 # http://docs.pylonsproject.org/projects/pyramid/en/latest/tutorials/modwsgi/
 ###
 
+# Apache will use the matching system python3, but it doesn't know about the venv.
+# Let's explicitly make its packages available to system py3.
 import site
 site.addsitedir('{{ install_dir }}/../venv/lib/python3.6/site-packages/') 
 

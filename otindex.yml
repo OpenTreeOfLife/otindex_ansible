@@ -27,7 +27,7 @@
         state: present
       become: true
 
-
+# This is only needed for otindex, it's up here so that it fails faster
     - name: Install pyscopg venv
       pip:
         virtualenv: "{{ install_dir }}/../venv"

@@ -3,6 +3,9 @@
 # http://docs.pylonsproject.org/projects/pyramid/en/latest/tutorials/modwsgi/
 ###
 
+import site
+site.addsitedir('{{ install_dir }}/../venv/lib/python3.6/site-packages/') 
+
 from pyramid.paster import get_app, setup_logging
 ini_path = '{{ install_dir }}/otindex/{{ config_filename }}'
 setup_logging(ini_path)

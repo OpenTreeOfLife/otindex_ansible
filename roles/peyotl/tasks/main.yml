@@ -2,7 +2,7 @@
 
 # Install and configure peyotl library
 
-- name: Clone peyotl repo
+- name: Clone peyotl repo ({{ peyotl_branch}})
   git:
     repo: https://github.com/OpenTreeOfLife/peyotl.git
     dest: "{{ install_dir }}/peyotl"

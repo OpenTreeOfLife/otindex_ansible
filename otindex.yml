@@ -7,10 +7,6 @@
 # in apache role)
 
   pre_tasks:
-    # python2 might not be installed on server (e.g. Ubuntu16)
-    - name: install python 2
-      become: true
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
     - name: Install packages
       become: true
       apt: name={{ item }} state=present
@@ -19,9 +15,10 @@
         - libpq-dev
         - git-core
         - build-essential
-#        - python-psycopg2-binary
+        - python-psycopg2
         - python-dev
-        - python-pip   # for setuptols, pkg_resources, etc.
+        - python-pyramid
+
 
     - name: Add user "opentree"
       user:
@@ -29,6 +26,15 @@
         shell: /bin/bash       # Defaults to /bin/bash
         state: present
       become: true
+
+
+    - name: Install pyscopg venv
+      pip:
+        virtualenv: "{{ install_dir }}/../venv"
+        virtualenv_python: python3
+        name: psycopg2
+      become: yes
+      become_user: opentree
 
     - name: Create Folder
       file: 

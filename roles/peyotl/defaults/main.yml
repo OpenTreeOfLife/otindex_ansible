@@ -9,7 +9,9 @@ peyotl_config_location: "/home/opentree/.peyotl"
 peyotl_branch: pyramid-adjacent-changes
 
 # template vars
-phylesystem_parent: "{{ phylesystem_parent }}"
+phylesystem_parent: "{{ install_dir }}/phylesystem-1_par"
+phylesystem_location: "{{ phylesystem_parent }}/phylesystem-1"
+
 repo_nexml2json: 1.2.1
 ott_dir: "{{ install_dir }}/ott"
 logging_level: debug

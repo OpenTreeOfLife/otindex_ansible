@@ -6,7 +6,25 @@
   apt: name={{ item }} state=present
   with_items:
     - apache2
-    - libapache2-mod-wsgi
+    - libapache2-mod-wsgi-py3
+    - python3-pip
+
+- name: Install pyramid python requirements
+  pip:
+    virtualenv: "{{ install_dir }}/../venv"
+    virtualenv_python: python3
+    name: mako==1.1.0
+  become: yes 
+  become_user: opentree
+
+- name: Install pyramid python requirements (system)
+  pip:
+    name: mako==1.1.0
+    executable: pip3
+
+  become: yes 
+  become_user: opentree
+
 
 - name: write apache ssl sites available file
   become: true

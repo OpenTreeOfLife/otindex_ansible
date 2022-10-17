@@ -10,24 +10,24 @@ db_password: treepass
 db_username: postgres
 db_name: otindex
 
-# if this is true, then must set database_dump_filename
-# if false, then must set phylesystem_repo and ott_url
-database_dump: true
 
+## Needed for peyotl config
+api_domain: devapi.opentreeoflife.org/
 
 #Current otindexdev setup
 phylesystem_parent: "{{ install_dir }}/phylesystem-0_par"
 phylesystem_location: "{{ phylesystem_parent }}/phylesystem-0"
 
+# if this is true, then must set database_dump_filename
+# if false, then must set phylesystem_repo and ott_url
+database_dump: true
+
+
 # set these if database_dump is false
 # loads database on server; requires >4GB memory
 phylesystem_repo: https://github.com/OpenTreeOfLife/phylesystem-0.git
-ott_url: http://files.opentreeoflife.org/ott/ott3.0/ott3.0.tgz
+ott_url: http://files.opentreeoflife.org/ott/ott3.3/ott3.3.tgz
 
-# set if database_dump is true
-# uploads local database dump; use if server has limited memory
-# create compressed dump using: $ pg_dump -a db_name | gzip > filename.gz
-database_dump_filename: /home/ejmctavish/projects/otapi/otindex_ansible/otindex.dmp
 
 # the name of the configuration file for pyramid
 config_filename: development.ini

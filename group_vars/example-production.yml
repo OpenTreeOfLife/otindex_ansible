@@ -10,6 +10,13 @@ db_password:
 db_username: postgres
 db_name: otindex
 
+## Needed for peyotl config
+api_domain: api.opentreeoflife.org/
+
+phylesystem_parent: "{{ install_dir }}/phylesystem-1_par"
+phylesystem_location: "{{ phylesystem_parent }}/phylesystem-1"
+
+
 # if this is true, then must set database_dump_filename
 # if false, then must set phylesystem_repo and ott_url
 database_dump: false

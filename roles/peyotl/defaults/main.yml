@@ -6,7 +6,7 @@
 peyotl_config_location: "/home/opentree/.peyotl"
 #peyotl_branch: modern-taxalotl
 # results in TypeError: 'dict_values' object does not support indexing
-peyotl_branch: pyramid-adjacent-changes
+peyotl_branch: master
 
 # template vars
 phylesystem_parent: "{{ phylesystem_parent }}"

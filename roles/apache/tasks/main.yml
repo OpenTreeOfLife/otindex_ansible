@@ -8,6 +8,11 @@
     - apache2
     - libapache2-mod-wsgi-py3
 
+##Pyramid WSGI still hitting system python packages for some reason...
+- name: Install pyramid python requirements (system)
+  pip:
+    name: pyramid>=2.0
+    executable: pip3
 
 ## Not sure why this is neccessary! (but it was)
 - name: Install pyramid python requirements (system)

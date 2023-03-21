@@ -1,4 +1,4 @@
 ---
 # task vars
-otindex_branch: master
+otindex_branch: name-search-fix
 otindex_logging_filepath: "{{ otindex_logfile_dir }}/otindex.log"
